@@ -36,7 +36,7 @@ function Map() {
     return (
         <div className='absolute bottom-0 right-0 w-[1075px] h-[635px] rounded-lg shadow-lg overflow-hidden'>
             {/* Input Fields */}
-            <div className='p-4 bg-white shadow-md rounded-lg absolute top-2 left-2 z-10'>
+            <div className='p-4 bg-white shadow-md rounded-lg absolute bottom-2 right-2 z-10'>
               <Autocomplete>
                 <input type='text' ref={originRef} placeholder='Origin' className='border p-2 m-2 rounded-md' />
               </Autocomplete>
