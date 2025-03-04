@@ -1,57 +1,100 @@
-import React, { useRef, useState } from 'react';
-import { useJsApiLoader, GoogleMap, Marker, Autocomplete, DirectionsRenderer } from '@react-google-maps/api';
+import React, { useState, useEffect } from "react";
+import {
+    useJsApiLoader,
+    GoogleMap,
+    DirectionsRenderer
+} from "@react-google-maps/api";
+import TruckMarker from "./TruckMarker"; // Import TruckMarker component
+
+const libraries = ["places"];
+
 
 function Map() {
-    const center = { lat: 12.9352, lng: 77.6245 };
-
-    // Load Google Maps API
     const { isLoaded } = useJsApiLoader({
-        googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY, // Ensure this key is correct
-        libraries: ['places'], // Optional: Needed for autocomplete or directions
+        googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+        libraries: libraries,
     });
 
-    const [directionResponse, setDirectionRespose] =useState(null)
-    // Define refs OUTSIDE of conditional rendering
-    const originRef = useRef(null);
-    const destinationRef = useRef(null);
+    const [directionResponse, setDirectionResponse] = useState(null);
+    const [activeRoute, setActiveRoute] = useState(null);
+    const [waypoints, setWaypoints] = useState([]);
+    const [mapCenter, setMapCenter] = useState(null);
 
-    // Prevent hook errors
+    // Predefined routes
+    const routes = [
+        [
+            { lat: 12.9352, lng: 77.6245 }, // Example Start
+            { lat: 12.9716, lng: 77.5946 } // Example Destination
+        ],
+        [
+            { lat: 12.9141, lng: 74.856 },
+            { lat: 10.1632, lng: 76.6413 }
+        ],
+        [
+            { lat: 19.076, lng: 72.8777 },
+            { lat: 15.2993, lng: 74.124 }
+        ]
+    ];
+
+    const toggleRoute = (index) => {
+        if (activeRoute === index) {
+            setDirectionResponse(null);
+            setWaypoints([]);
+            setActiveRoute(null);
+            setMapCenter(null);
+        } else {
+            const directionService = new google.maps.DirectionsService();
+            directionService.route(
+                {
+                    origin: routes[index][0],
+                    destination: routes[index][1],
+                    travelMode: google.maps.TravelMode.DRIVING,
+                },
+                (result, status) => {
+                    if (status === google.maps.DirectionsStatus.OK) {
+                        setDirectionResponse(result);
+                        setActiveRoute(index);
+
+                        // Extract waypoints from the route
+                        const steps = result.routes[0].legs[0].steps;
+                        let extractedWaypoints = steps.map(step => step.start_location);
+                        extractedWaypoints.push(steps[steps.length - 1].end_location);
+
+                        setWaypoints(extractedWaypoints);
+                        setMapCenter(extractedWaypoints[0]); // Start truck at first waypoint
+                    } else {
+                        console.error("Could not retrieve route");
+                    }
+                }
+            );
+        }
+    };
+
     if (!isLoaded) {
         return <p>Loading Map...</p>;
     }
 
-    async function calculateRoute(){
-      if(originRef.current.value==="" || destinationRef.current.value===""){
-        return
-      }
-      const directionService = new google.maps.DirectionsService()
-      const results = await directionService.route({
-        origin: originRef.current.value,
-        destination: destinationRef.current.value,
-        travelMode: google.maps.TravelMode.DRIVING
-      })
-      setDirectionRespose(results)
-    }
-
     return (
-        <div className='absolute bottom-0 right-0 w-[1075px] h-[635px] rounded-lg shadow-lg overflow-hidden'>
-            {/* Input Fields */}
-            <div className='p-4 bg-white shadow-md rounded-lg absolute bottom-2 right-2 z-10'>
-              <Autocomplete>
-                <input type='text' ref={originRef} placeholder='Origin' className='border p-2 m-2 rounded-md' />
-              </Autocomplete>
-              <Autocomplete>
-                <input type='text' ref={destinationRef} placeholder='Destination' className='border p-2 m-2 rounded-md' />
-              </Autocomplete>
-                <button className='border-1 rounded-md p-1 bg-amber-300 hover:bg-green-600' onClick={calculateRoute}>Calculate</button>
+        <div className="absolute ml-[400px] w-[1075px] h-[635px]  shadow-lg overflow-hidden">
+            <div className="p-4 bg-white shadow-md rounded-lg absolute bottom-2 right-2 z-10">
+                {routes.map((_, index) => (
+                    <button
+                        key={index}
+                        className="border-1 rounded-md p-2 m-1 bg-amber-300 hover:bg-green-600"
+                        onClick={() => toggleRoute(index)}
+                    >
+                        {activeRoute === index
+                            ? `Hide Route ${index + 1}`
+                            : `Show Route ${index + 1}`}
+                    </button>
+                ))}
             </div>
 
-            {/* Google Map */}
             <GoogleMap
                 id="google-map"
-                center={center}
-                zoom={15}
-                mapContainerStyle={{ width: '100%', height: '100%' }}
+                center={mapCenter || routes[0][0]}
+                zoom={10}
+                mapContainerStyle={{ width: "100%", height: "100%" }}
                 options={{
                     zoomControl: true,
                     streetViewControl: false,
@@ -59,9 +102,14 @@ function Map() {
                     fullscreenControl: false,
                 }}
             >
-                {/* Marker at Center */}
-                {/* <Marker position={center} /> */}
-                {directionResponse && <DirectionsRenderer directions={directionResponse}/>}
+                {directionResponse && <DirectionsRenderer directions={directionResponse} />}
+
+                {/* Only one TruckMarker component */}
+                <TruckMarker 
+                    waypoints={waypoints} 
+                    isActive={activeRoute !== null} 
+                    onEnd={() => console.log("Truck reached destination!")} 
+                />
             </GoogleMap>
         </div>
     );

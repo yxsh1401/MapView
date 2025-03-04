@@ -10,19 +10,16 @@ import Trip from './components/Trip'
 function App() {
   const [isNavExpanded, setIsNavExpanded] = useState(true);
       return (
-        <div className="flex h-screen">
+        <div className="flex h-screen overflow-hidden">
                 {/* Left Sidebar */}
                 <LeftNav onHoverChange={setIsNavExpanded} />
     
                 {/* Main Content */}
-                <div
-                    className={`flex-1 transition-all duration-300 ${
-                        isNavExpanded ? "ml-0" : "ml-0"
-                    }`}
-                >
+                <div className={`flex-1 transition-all duration-300 ${isNavExpanded ? "0" : "ml-0"}`}>
                   <TopMenuBar/>
                   <Trip/>
                   <Map/>
+                  
                 </div>  
             </div>
       )
