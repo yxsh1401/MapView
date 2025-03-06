@@ -15,7 +15,7 @@ const TripCard = ({ trip, index, onTripSelect }) => {
       onClick={() => onTripSelect(trip)}
     >
       {/* Header Section */}
-      <div className="flex justify-between w-full"> 
+      <div className="flex justify-between w-full">
         {/* User Image */}
         <div className="flex items-center">
           <img
@@ -134,11 +134,14 @@ const TripCard = ({ trip, index, onTripSelect }) => {
             <div className="pl-5 pt-6">
               <button
                 className="w-[18px] h-[18px] flex items-center justify-center border border-red-500 rounded-full"
-                onClick={() =>{
-                  setActiveRoute(activeRoute === index ? null : index)
-                    onTripSelect(trip)
-                }
-                }
+                onClick={() => {
+                  setActiveRoute((prevRoute) =>
+                    prevRoute === index ? null : index
+                  );
+                  setSelectedTrip((prevTrip) =>
+                    prevTrip?.id === trip.id ? null : trip
+                  );
+                }}
               >
                 <span className="text-red-500">
                   <RxTriangleRight />
