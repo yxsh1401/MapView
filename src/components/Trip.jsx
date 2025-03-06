@@ -1,4 +1,5 @@
 import TripCard from "./TripCard";
+import TrackingCard from "./TrackingCard"; 
 import React, { useState, useCallback } from "react";
 import searchIcon from "../assets/images/searchbar/Group 13517.svg";
 import rotateIcon from "../assets/images/searchbar/rotate-cw.svg";
@@ -104,15 +105,19 @@ const trips = [
 
 const TripList = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedTrip, setSelectedTrip] = useState(null);
+
+  
   const resetStatusFilters = () => {
     setSearchTerm("");
   };
 
   const onTripSelect = useCallback((trip) => {
-    console.log("Selected trip:", trip);
+    setSelectedTrip(trip);
   }, []);
 
   return (
+    <div>
     <div className="border-r-1 border-gray-300 w-[400px]">
       <div className="pt-2">
         <div className="pl-[7px] pr-[7px] flex ml-3">
@@ -146,6 +151,11 @@ const TripList = () => {
         ))}
       </div>
     </div>
+    {/* Right Panel: Tracking Card (conditionally displayed) */}
+    {selectedTrip !== null && <TrackingCard trip={selectedTrip} />}
+  </div>
+
+
   );
 };
 
