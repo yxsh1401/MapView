@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Marker } from "@react-google-maps/api";
 import truckIcon from "../assets/images/ttruck.png"; // Replace with the correct image path
 
@@ -44,6 +44,6 @@ const TruckMarker = ({ waypoints, isActive, onEnd }) => {
             }}
         />
     );
-};
+}
 
 export default TruckMarker;

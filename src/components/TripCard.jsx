@@ -1,10 +1,14 @@
+import { useContext } from "react";
+import { RouteContext } from "../context/RouteContext";
+
 import pp1 from '../assets/images/card/pp1.svg'
 import phone from '../assets/images/card/phone.svg'
 import whatsapp from '../assets/images/card/Whatsapp.svg'
 import { RxTriangleRight } from "react-icons/rx";
 import { FaAngleDown } from "react-icons/fa6";
 
-const TripCard = ({ trip }) => {
+const TripCard = ({ trip, index }) => {
+    const { activeRoute, setActiveRoute } = useContext(RouteContext);
     return (
         <div className="bg-white  rounded-lg p-4 mb-3 w-full hover:bg-gray-200">
             {/* Header Section */}
@@ -116,9 +120,10 @@ const TripCard = ({ trip }) => {
                         </div>
                         {/* Action Button */}
                         <div className='pl-5 pt-6'>
-                        <button className="w-[18px] h-[18px] flex items-center justify-center border border-red-500 rounded-full">
+                        <button className="w-[18px] h-[18px] flex items-center justify-center border border-red-500 rounded-full"
+                         onClick={() => setActiveRoute(activeRoute === index ? null : index)}>
                                 <span className="text-red-500"><RxTriangleRight /></span>
-                            </button>
+                        </button>
                         </div>
                     </div>
 
