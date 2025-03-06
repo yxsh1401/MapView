@@ -12,7 +12,8 @@ export function RouteProvider({ children }) {
     const routes = useMemo(() => [
         [{ lat: 12.9352, lng: 77.6245 }, { lat: 12.9716, lng: 77.5946 }],
         [{ lat: 12.9141, lng: 74.856 }, { lat: 10.1632, lng: 76.6413 }],
-        [{ lat: 19.076, lng: 72.8777 }, { lat: 15.2993, lng: 74.124 }]
+        [{ lat: 19.076, lng: 72.8777 }, { lat: 15.2993, lng: 74.124 }],
+        [{ lat: 25.5941, lng: 85.1376 }, { lat: 28.7041, lng: 77.1025 }],
     ], []);
 
     useEffect(() => {

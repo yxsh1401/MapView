@@ -7,10 +7,11 @@ import whatsapp from '../assets/images/card/Whatsapp.svg'
 import { RxTriangleRight } from "react-icons/rx";
 import { FaAngleDown } from "react-icons/fa6";
 
-const TripCard = ({ trip, index }) => {
+const TripCard = ({ trip, index, onTripSelect }) => {
     const { activeRoute, setActiveRoute } = useContext(RouteContext);
     return (
-        <div className="bg-white  rounded-lg p-4 mb-3 w-full hover:bg-gray-200">
+        <div className="bg-white  rounded-lg p-4 mb-3 w-full hover:bg-gray-200"
+        onClick={() => onTripSelect(trip)}>
             {/* Header Section */}
             <div className="flex justify-between w-full">
              {/* User Image */}
