@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 
 // Images import
-import logo from '../assets/images/left panel/Rectangle 1918.png';
-import logoMax from '../assets/images/left panel/Rectangle big.png';
-import dash from '../assets/images/left panel/layout 1.svg';
-import plan from '../assets/images/left panel/edit 1.svg';
-import trip from '../assets/images/left panel/truck 1.svg';
-import master from '../assets/images/left panel/users 1.svg';
-import invoice from '../assets/images/left panel/file 1.svg';
-import report from '../assets/images/left panel/file-text 1.svg';
-import control from '../assets/images/left panel/radio 1.svg';
-import help from '../assets/images/left panel/book-open 1.svg';
+import logo from "../assets/images/left panel/Rectangle 1918.png";
+import logoMax from "../assets/images/left panel/Rectangle big.png";
+import dash from "../assets/images/left panel/layout 1.svg";
+import plan from "../assets/images/left panel/edit 1.svg";
+import trip from "../assets/images/left panel/truck 1.svg";
+import master from "../assets/images/left panel/users 1.svg";
+import invoice from "../assets/images/left panel/file 1.svg";
+import report from "../assets/images/left panel/file-text 1.svg";
+import control from "../assets/images/left panel/radio 1.svg";
+import help from "../assets/images/left panel/book-open 1.svg";
 
 const LeftNavBar = ({ onHoverChange }) => {
   const LeftList = [

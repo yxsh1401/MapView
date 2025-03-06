@@ -37,15 +37,15 @@ const TrackingCard = () => {
 
             {/* Right Dot */}
             <img src={dot} className="w-[15px] relative z-10" />
+        </div>
+        <div className="flex justify-between"> 
+            <div>
+                <p className="text-[10px] text-gray-600 ml-[-8px] mt-[-15px] pl-2">12:20pm</p> 
             </div>
-            <div className="flex justify-between"> 
-                <div>
-                    <p className="text-[10px] text-gray-600 ml-[-8px] mt-[-15px] pl-2">12:20pm</p> 
-                </div>
-                <div>
-                    <p className="text-[10px] text-gray-600 mr-[8px] mt-[-15px]">12:20pm</p> 
-                </div>
+            <div>
+                <p className="text-[10px] text-gray-600 mr-[8px] mt-[-15px]">12:20pm</p> 
             </div>
+        </div>
     </div>
    
     </>

@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import down from "../assets/images/profile_side/Group 142.svg";
 import profile from "../assets/images/profile_side/images (24) 1.png";
 import refresh from "../assets/images/profile_side/refresh-cw.svg";
-// import link from "../assets/images/settings/external-link.svg";
 import settings from '../assets/images/settings/sliders.svg'
 
 import cust from '../assets/images/top/cust.svg'
@@ -11,10 +10,6 @@ import fact from '../assets/images/top/fact.svg'
 import war from '../assets/images/top/war.svg'
 import gas from '../assets/images/top/gas.svg'
 import hotel from '../assets/images/top/hotel.svg'
-
-
-
-
 
 const TopMenuBar = () => {
   const [isToggled, setIsToggled] = useState(false);
@@ -98,29 +93,29 @@ const TopMenuBar = () => {
       <div className="flex justify-between items-center mt-1 border-b border-gray-300">
         {/* Status Tabs */}
         <div className="w-[450px] ml-[12px] mb-[8px] mt-[5px]">
-  <div className="flex border border-gray-300 rounded-lg overflow-hidden w-fit">
-    {tabs.map((tab) => (
-      <button
-        key={tab.name}
-        onClick={() => setActiveTab(tab.name)}
-        className={`px-6 py-2 text-gray-500 text-[12px] font-normal transition-all flex items-center gap-2 border-l border-gray-300 
-          ${
-            activeTab === tab.name
-              ? "bg-[rgba(10,179,140,0.1)] text-teal-600"
-              : "bg-white hover:bg-gray-100"
-          }`}
-      >
-        {tab.name !== "All" && (
-        <span className="relative w-3.5 h-3.5 flex items-center justify-center">
-          <span className={`w-3.5 h-3.5 rounded-full ${tab.outerColor}`} />
-          <span className={`w-1.5 h-1.5 rounded-full ${tab.innerColor} absolute`} />
-        </span>
-        )}
-        {tab.name}
-      </button>
-    ))}
-  </div>
-</div>
+          <div className="flex border border-gray-300 rounded-lg overflow-hidden w-fit">
+            {tabs.map((tab) => (
+              <button
+                key={tab.name}
+                onClick={() => setActiveTab(tab.name)}
+                className={`px-6 py-2 text-gray-500 text-[12px] font-normal transition-all flex items-center gap-2 border-l border-gray-300 
+                  ${
+                    activeTab === tab.name
+                      ? "bg-[rgba(10,179,140,0.1)] text-teal-600"
+                      : "bg-white hover:bg-gray-100"
+                  }`}
+              >
+                {tab.name !== "All" && (
+                <span className="relative w-3.5 h-3.5 flex items-center justify-center">
+                  <span className={`w-3.5 h-3.5 rounded-full ${tab.outerColor}`} />
+                  <span className={`w-1.5 h-1.5 rounded-full ${tab.innerColor} absolute`} />
+                </span>
+                )}
+                {tab.name}
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* Location Tabs */}
         <div className="flex items-center gap-4 mr-[23px] ">
@@ -134,11 +129,9 @@ const TopMenuBar = () => {
                     activeLocTab === tab.name
                       ? "bg-gray-200 text-gray-700"
                       : "bg-white hover:bg-gray-100"
-                  }`}
-              >
+                  }`}>
                 <span>{tab.name}</span>
                 <span className="text-lg">{tab.icon}</span>
-                
               </button>
             ))}
           </div>

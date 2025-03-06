@@ -1,8 +1,7 @@
 import TripCard from "./TripCard";
 import React, { useState, useCallback } from "react";
-import searchIcon from '../assets/images/searchbar/Group 13517.svg';
-import rotateIcon from '../assets/images/searchbar/rotate-cw.svg';
-
+import searchIcon from "../assets/images/searchbar/Group 13517.svg";
+import rotateIcon from "../assets/images/searchbar/rotate-cw.svg";
 
 const trips = [
   {
@@ -100,48 +99,54 @@ const trips = [
     source: "BANGALORE CENTRAL HUB-D31",
     destination: "HYDERABAD REGIONAL CENTER-D37",
     image: "pp7",
-  }
+  },
 ];
 
 const TripList = () => {
-    
-    const [searchTerm, setSearchTerm] = useState("");
-    const resetStatusFilters = () => {
-        setSearchTerm("");
-    };  
+  const [searchTerm, setSearchTerm] = useState("");
+  const resetStatusFilters = () => {
+    setSearchTerm("");
+  };
 
-    const onTripSelect = useCallback((trip) => {
-      console.log("Selected trip:", trip);
+  const onTripSelect = useCallback((trip) => {
+    console.log("Selected trip:", trip);
   }, []);
 
-
-    return (
-        <div className="border-r-1 border-gray-300 w-[400px]">
-            <div className="pt-2">
-                <div className="pl-[7px] pr-[7px] flex ml-3">
-                    <div className="flex items-center border border-gray-300 rounded-md h-[32px] w-[310px] bg-white">
-                        <img src={searchIcon} alt="search" className="w-4 h-4 ml-3" />
-                        <input
-                            type="text"
-                            placeholder="Search"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="ml-2 outline-none w-full text-[12px]"
-                        />
-                    </div>
-                    <button onClick={resetStatusFilters} className="h-[32px] w-[32px] ml-3 border rounded-md border-gray-300 flex items-center justify-center">
-                        <img src={rotateIcon} className="w-4 h-4" alt="reset" />
-                    </button>
-                </div>
-            </div>
-            
-            <div className="w-[400px] h-[600px] p-4 overflow-y-auto no-scrollbar rounded-lg">
-                {trips.map((trip, index) => (
-                    <TripCard key={index} trip={trip} index={index} onTripSelect={onTripSelect}/>
-                ))}
-            </div>
+  return (
+    <div className="border-r-1 border-gray-300 w-[400px]">
+      <div className="pt-2">
+        <div className="pl-[7px] pr-[7px] flex ml-3">
+          <div className="flex items-center border border-gray-300 rounded-md h-[32px] w-[310px] bg-white">
+            <img src={searchIcon} alt="search" className="w-4 h-4 ml-3" />
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="ml-2 outline-none w-full text-[12px]"
+            />
+          </div>
+          <button
+            onClick={resetStatusFilters}
+            className="h-[32px] w-[32px] ml-3 border rounded-md border-gray-300 flex items-center justify-center"
+          >
+            <img src={rotateIcon} className="w-4 h-4" alt="reset" />
+          </button>
         </div>
-    );
+      </div>
+
+      <div className="w-[400px] h-[600px] p-4 overflow-y-auto no-scrollbar rounded-lg">
+        {trips.map((trip, index) => (
+          <TripCard
+            key={index}
+            trip={trip}
+            index={index}
+            onTripSelect={onTripSelect}
+          />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default TripList;
