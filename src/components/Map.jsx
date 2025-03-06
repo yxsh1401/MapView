@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import {
     useJsApiLoader,
     GoogleMap,
@@ -14,6 +14,7 @@ function Map() {
         googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
         libraries: libraries,
     });
+    console.log("Rendering Map Component");
 
     const [directionResponse, setDirectionResponse] = useState(null);
     const [activeRoute, setActiveRoute] = useState(null);
@@ -75,7 +76,7 @@ function Map() {
     }
 
     return (
-        <div className="absolute ml-[400px] w-[1075px] h-[635px]  shadow-lg overflow-hidden">
+        <div className="fixed ml-[400px] w-[1085px] h-[635px]  shadow-lg overflow-hidden">
             <div className="p-4 bg-white shadow-md rounded-lg absolute bottom-2 right-2 z-10">
                 {routes.map((_, index) => (
                     <button
@@ -104,7 +105,7 @@ function Map() {
             >
                 {directionResponse && <DirectionsRenderer directions={directionResponse} />}
 
-                {/* Only one TruckMarker component */}
+                
                 <TruckMarker 
                     waypoints={waypoints} 
                     isActive={activeRoute !== null} 
@@ -115,4 +116,4 @@ function Map() {
     );
 }
 
-export default Map;
+export default React.memo(Map);
