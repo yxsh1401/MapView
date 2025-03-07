@@ -3,6 +3,7 @@ import TrackingCard from "./TrackingCard";
 import React, { useState, useCallback } from "react";
 import searchIcon from "../assets/images/searchbar/Group 13517.svg";
 import rotateIcon from "../assets/images/searchbar/rotate-cw.svg";
+const images = import.meta.glob("../assets/images/card/*.svg", { eager: true });
 
 const trips = [
   {
@@ -15,7 +16,7 @@ const trips = [
     atime: "8:00 PM",
     source: "C&FA-Manguli-Cuttack-D15",
     destination: "TUKKUGUDA RDC-D34",
-    image: "pp1",
+    image: images["../assets/images/card/pp1.svg"].default,
   },
   {
     id: "2853",
@@ -27,7 +28,7 @@ const trips = [
     atime: "4:00 PM",
     source: "TUKKUGUDA RDC-D34",
     destination: "Kothur Factory -381-",
-    image: "pp2",
+    image: images["../assets/images/card/pp2.svg"].default,
   },
   {
     id: "2867",
@@ -39,7 +40,7 @@ const trips = [
     atime: "2:00 PM",
     source: "C&FA-GHAZIABAD-D30",
     destination: "UNNAO-ATFL OWN FACT...",
-    image: "pp3",
+    image: images["../assets/images/card/pp3.svg"].default,
   },
   {
     id: "2868",
@@ -51,7 +52,7 @@ const trips = [
     atime: "2:00 PM",
     source: "C&FA-GHAZIABAD-D30",
     destination: "UNNAO-ATFL OWN FACT...",
-    image: "pp3",
+    image: images["../assets/images/card/pp2.svg"].default,
   },
   {
     id: "2901",
@@ -63,7 +64,7 @@ const trips = [
     atime: "3:45 PM",
     source: "BHIWANDI HUB-MUMBAI-D11",
     destination: "DELHI CARGO TERMINAL-D19",
-    image: "pp4",
+    image: images["../assets/images/card/pp1.svg"].default,
   },
   {
     id: "2934",
@@ -75,7 +76,7 @@ const trips = [
     atime: "6:30 PM",
     source: "HOWRAH WAREHOUSE-KOLKATA-D12",
     destination: "PUNE DISTRIBUTION CENTER-D27",
-    image: "pp5",
+    image: images["../assets/images/card/pp3.svg"].default,
   },
   {
     id: "2980",
@@ -87,7 +88,7 @@ const trips = [
     atime: "8:00 PM",
     source: "NOIDA STORAGE FACILITY-D23",
     destination: "CHENNAI TRADE HUB-D41",
-    image: "pp6",
+    image: images["../assets/images/card/pp2.svg"].default,
   },
   {
     id: "3012",
@@ -99,11 +100,12 @@ const trips = [
     atime: "9:30 PM",
     source: "BANGALORE CENTRAL HUB-D31",
     destination: "HYDERABAD REGIONAL CENTER-D37",
-    image: "pp7",
+    image: images["../assets/images/card/pp3.svg"].default,
   },
 ];
 
 const TripList = () => {
+  
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTrip, setSelectedTrip] = useState(null);
 

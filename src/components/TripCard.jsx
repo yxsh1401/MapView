@@ -9,6 +9,7 @@ import { FaAngleDown } from "react-icons/fa6";
 
 const TripCard = ({ trip, index, onTripSelect }) => {
   const { activeRoute, setActiveRoute } = useContext(RouteContext);
+  
   return (
     <div
       className="bg-white  rounded-lg p-4 mb-3 w-full hover:bg-gray-200"
@@ -19,7 +20,7 @@ const TripCard = ({ trip, index, onTripSelect }) => {
         {/* User Image */}
         <div className="flex items-center">
           <img
-            src={pp1}
+            src={trip.image}
             alt={trip.driver}
             className="w-12 h-12 rounded-sm object-cover bg-gray-300"
           />
