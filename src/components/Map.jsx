@@ -3,9 +3,13 @@ import {
   useJsApiLoader,
   GoogleMap,
   DirectionsRenderer,
+  Marker
 } from "@react-google-maps/api";
 import TruckMarker from "./TruckMarker";
+import start from "../assets/images/start.png"
+import end from "../assets/images/end.png"
 import { RouteContext } from "../context/RouteContext"; // Import context
+// import midpointIcon from '../assets/images/midpoints.png'
 
 const libraries = ["places"];
 
@@ -39,8 +43,40 @@ function Map() {
         }}
       >
         {directionResponse && (
-          <DirectionsRenderer directions={directionResponse} />
-        )}
+  <>
+    {/* Custom Start Marker */}
+    <Marker
+      position={directionResponse.routes[0].legs[0].start_location}
+      icon={{
+        url: start, // Custom start icon
+        scaledSize: new window.google.maps.Size(40, 40), // Adjust size
+      }}
+    />
+
+    {/* Custom End Marker */}
+    <Marker
+      position={directionResponse.routes[0].legs[0].end_location}
+      icon={{
+        url: end, // Custom end icon
+        scaledSize: new window.google.maps.Size(40, 40), // Adjust size
+      }}
+    />
+
+
+    {/* DirectionsRenderer with Custom Route Color */}
+    <DirectionsRenderer
+      directions={directionResponse}
+      options={{
+        polylineOptions: {
+          strokeColor: "#28A34C", // Custom color
+          strokeOpacity: 0.8, // Adjust opacity
+          strokeWeight: 5, // Adjust thickness
+        },
+        suppressMarkers: true,
+      }}
+    />
+  </>
+)}
         <TruckMarker waypoints={waypoints} isActive={waypoints.length > 0} />
       </GoogleMap>
     </div>

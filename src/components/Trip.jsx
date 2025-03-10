@@ -13,7 +13,11 @@ const trips = [
     dateTime: "9 Nov '24, ",
     date: "9 Nov",
     time: "1:15 AM",
-    atime: "8:00 PM",
+    atime: "1:16 AM",
+    stops: [
+    "C&FA-GHAZIABAD-D30",
+    "BHIWANDI HUB-MUMBAI-D11"
+  ],
     source: "C&FA-Manguli-Cuttack-D15",
     destination: "TUKKUGUDA RDC-D34",
     image: images["../assets/images/card/pp1.svg"].default,
@@ -105,7 +109,6 @@ const trips = [
 ];
 
 const TripList = () => {
-  
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTrip, setSelectedTrip] = useState(null);
 
@@ -120,6 +123,15 @@ const TripList = () => {
         : { ...trip, index }
     );
   }, []);
+
+  // Filter trips based on the search term
+  const filteredTrips = trips.filter((trip) =>
+    Object.values(trip).some(
+      (value) =>
+        typeof value === "string" &&
+        value.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
 
   return (
     <div>
@@ -146,14 +158,20 @@ const TripList = () => {
         </div>
 
         <div className="w-[400px] h-[600px] p-4 overflow-y-auto no-scrollbar rounded-lg">
-          {trips.map((trip, index) => (
-            <TripCard
-              key={index}
-              trip={trip}
-              index={index}
-              onTripSelect={onTripSelect}
-            />
-          ))}
+          {filteredTrips.length > 0 ? (
+            filteredTrips.map((trip, index) => (
+              <TripCard
+                key={index}
+                trip={trip}
+                index={index}
+                onTripSelect={onTripSelect}
+              />
+            ))
+          ) : (
+            <p className="text-center text-gray-500 text-sm mt-4">
+              No trips found.
+            </p>
+          )}
         </div>
       </div>
       {/* Right Panel: Tracking Card (conditionally displayed) */}
@@ -163,3 +181,4 @@ const TripList = () => {
 };
 
 export default TripList;
+

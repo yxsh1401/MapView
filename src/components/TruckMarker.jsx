@@ -1,14 +1,18 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { Marker } from "@react-google-maps/api";
-import truckIcon from "../assets/images/ttruck.png"; // Replace with the correct image path
+import React, { useState, useEffect } from "react";
+import { Marker, OverlayView } from "@react-google-maps/api";
+// import truckIcon from "../assets/images/ttruck.png"; 
+import truckIcon from "../assets/images/car.png"; 
+import TripInfoCard from "./TripInfoCard"; // Import the Trip Info Card
 
-const TruckMarker = ({ waypoints, isActive, onEnd }) => {
+
+const TruckMarker = ({ waypoints, isActive, trip, onEnd }) => {
   const [markerPosition, setMarkerPosition] = useState(null);
   const [currentWaypointIndex, setCurrentWaypointIndex] = useState(0);
+  const [showTripInfo, setShowTripInfo] = useState(false);
 
   useEffect(() => {
     if (!isActive || waypoints.length === 0) {
-      setMarkerPosition(null); // Hide truck when route is hidden
+      setMarkerPosition(null);
       return;
     }
 
@@ -22,7 +26,7 @@ const TruckMarker = ({ waypoints, isActive, onEnd }) => {
           return nextIndex;
         } else {
           clearInterval(interval);
-          if (onEnd) onEnd(); // Call when the truck reaches the destination
+          if (onEnd) onEnd();
           return prevIndex;
         }
       });
@@ -31,18 +35,30 @@ const TruckMarker = ({ waypoints, isActive, onEnd }) => {
     return () => clearInterval(interval);
   }, [waypoints, isActive]);
 
-  // Hide marker when route is hidden
   if (!isActive || !markerPosition) return null;
 
   return (
-    <Marker
-      position={markerPosition}
-      icon={{
-        url: truckIcon,
-        scaledSize: new window.google.maps.Size(40, 40),
-        anchor: new window.google.maps.Point(20, 20),
-      }}
-    />
+    <>
+      <Marker
+        position={markerPosition}
+        icon={{
+          url: truckIcon,
+          scaledSize: new window.google.maps.Size(40, 40),
+          anchor: new window.google.maps.Point(20, 20),
+        }}
+        onClick={() => setShowTripInfo((prev) => !prev)} // Toggle info card
+      />
+
+      {/* Trip Info Card appears above truck */}
+      {showTripInfo && (
+        <OverlayView
+          position={markerPosition}
+          mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+        >
+          <TripInfoCard trip={trip || {}} onClose={() => setShowTripInfo(false)} />
+        </OverlayView>
+      )}
+    </>
   );
 };
 
