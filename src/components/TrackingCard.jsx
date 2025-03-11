@@ -42,8 +42,8 @@ const TrackingCard = ({ trip }) => {
 
   // Calculate progress
   const progress = duration > 0 ? (1 - remainingTime / duration) : 1; // 0 to 1 scale
-  const truckPositionX = 12 + progress * (95 - 12); // Moves from x1=12 to x2=95 in SVG
-  const completedLineWidth = `${10 + progress * 80}%`; // Completed path width
+  const truckPositionX = 5 + progress * (86 - 5); // Moves from x1=12 to x2=95 in SVG
+  const completedLineWidth = `${4 + progress * 90}%`; // Completed path width
 
   return (
     <div className="absolute bottom-7 left-[960px] transform -translate-x-1/2 bg-white shadow-lg rounded-lg p-[16px] w-[456px] h-[120px] flex-column items-center z-10">
@@ -75,7 +75,7 @@ const TrackingCard = ({ trip }) => {
         <img 
           src={truckIcon} 
           className="w-[25px] absolute z-20 transform -translate-y-1/2" 
-          style={{ left: `${truckPositionX}%`, top: "50%" }} 
+          style={{ left: `${truckPositionX}%`, top: "40%" }} 
           alt="Truck"
         />
 
