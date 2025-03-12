@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Marker, OverlayView } from "@react-google-maps/api";
 // import truckIcon from "../assets/images/ttruck.png"; 
-import truckIcon from "../assets/images/car.png"; 
+import truckIcon from "../assets/images/truck.png"; 
 import TripInfoCard from "./TripInfoCard"; // Import the Trip Info Card
 import { RouteContext } from "../context/RouteContext";
 
@@ -48,7 +48,7 @@ const TruckMarker = ({ waypoints, isActive, trip, onEnd }) => {
         position={markerPosition}
         icon={{
           url: truckIcon,
-          scaledSize: new window.google.maps.Size(40, 40),
+          scaledSize: new window.google.maps.Size(60, 60),
           anchor: new window.google.maps.Point(20, 20),
         }}
         onClick={() => setShowTripInfo((prev) => !prev)} // Toggle info card
@@ -60,7 +60,7 @@ const TruckMarker = ({ waypoints, isActive, trip, onEnd }) => {
           position={markerPosition}
           mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
         >
-          <TripInfoCard trip={trip || {}} onClose={() => setShowTripInfo(false)} />
+          <TripInfoCard trip={trip} />
         </OverlayView>
       )}
     </>

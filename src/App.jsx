@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import "./App.css";
 import LeftNav from "./components/LeftNav";
-import Map from "./components/Map";
+// import Map from "./components/Map";
 import TopMenuBar from "./components/TopMenu";
 import Trip from "./components/Trip";
 import { RouteProvider } from "./context/RouteContext";
@@ -23,7 +23,7 @@ function App() {
           <TopMenuBar />
           <div className="flex">
             <Trip />
-            <Map />
+            {/* <Map /> */}
           </div>
         </div>
       </div>

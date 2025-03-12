@@ -13,7 +13,7 @@ import { RouteContext } from "../context/RouteContext"; // Import context
 
 const libraries = ["places"];
 
-function Map() {
+function Map({trip}) {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
     libraries: libraries,
@@ -77,7 +77,7 @@ function Map() {
     />
   </>
 )}
-        <TruckMarker waypoints={waypoints} isActive={waypoints.length > 0} />
+        <TruckMarker waypoints={waypoints} isActive={waypoints.length > 0} trip={trip}/>
       </GoogleMap>
     </div>
   );

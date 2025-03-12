@@ -3,6 +3,7 @@ import TrackingCard from "./TrackingCard";
 import React, { useState, useCallback } from "react";
 import searchIcon from "../assets/images/searchbar/Group 13517.svg";
 import rotateIcon from "../assets/images/searchbar/rotate-cw.svg";
+import Map from './Map'
 const images = import.meta.glob("../assets/images/card/*.svg", { eager: true });
 
 const trips = [
@@ -10,6 +11,12 @@ const trips = [
     id: "2867",
     driver: "SATISH JHA",
     company: "EXPRESS ROADWAYS PVT LTD",
+    vehicleNumber: "MH03BC9788",
+    customer:"ExxonMobil Exploration Company",
+    invoice:"2022445",
+    ship:"348294923890",
+    order:"000001",
+    cost:"25,000.00",
     dateTime: "9 Nov '24, ",
     date: "9 Nov",
     time: "1:15 AM",
@@ -174,7 +181,9 @@ const TripList = () => {
           )}
         </div>
       </div>
-      {/* Right Panel: Tracking Card (conditionally displayed) */}
+      <div className="absolute top-[95px]">
+        <Map trip={selectedTrip}/>
+      </div>
       {selectedTrip !== null && <TrackingCard trip={selectedTrip} />}
     </div>
   );
