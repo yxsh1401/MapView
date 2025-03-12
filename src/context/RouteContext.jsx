@@ -7,6 +7,7 @@ export function RouteProvider({ children }) {
   const [directionResponse, setDirectionResponse] = useState(null);
   const [waypoints, setWaypoints] = useState([]);
   const [mapCenter, setMapCenter] = useState(null);
+  const [routeProgress, setRouteProgress] = useState(0);    
 
   // Predefined routes
   const routes = useMemo(
@@ -48,6 +49,7 @@ export function RouteProvider({ children }) {
             extractedWaypoints.push(steps[steps.length - 1].end_location);
             setWaypoints(extractedWaypoints);
             setMapCenter(extractedWaypoints[0]);
+            setRouteProgress(0);
           } else {
             console.error("Could not retrieve route");
           }
@@ -57,6 +59,7 @@ export function RouteProvider({ children }) {
       setDirectionResponse(null);
       setWaypoints([]);
       setMapCenter(null);
+      setRouteProgress(0);
     }
   }, [activeRoute, routes]);
 
@@ -69,6 +72,8 @@ export function RouteProvider({ children }) {
         waypoints,
         mapCenter,
         routes,
+        routeProgress, 
+        setRouteProgress,
       }}
     >
       {children}

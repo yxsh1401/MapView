@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import truckIcon from "../assets/images/struck.png";
 import start from "../assets/images/start.png";
 import end from "../assets/images/endg.png";
+import { RouteContext } from "../context/RouteContext"; 
 
 const TrackingCard = ({ trip }) => {
+  const { routeProgress } = useContext(RouteContext);
   if (!trip) return null;
 
   const parseTime = (timeStr) => {
@@ -65,22 +67,22 @@ const TrackingCard = ({ trip }) => {
         {/* SVG Route */}
         <svg className="absolute left-0 right-0 w-full h-2" xmlns="http://www.w3.org/2000/svg">
           {/* Completed Path (Green) */}
-          <line x1="5%" y1="50%" x2={completedLineWidth} y2="50%" stroke="green" strokeWidth="5" />
+          <line x1="5%" y1="50%" x2={`${5 + (routeProgress * 0.88)}%`}  y2="50%" stroke="green" strokeWidth="5" />
           
           {/* Remaining Path (Gray) */}
-          <line x1={completedLineWidth} y1="50%" x2="93%" y2="50%" stroke="gray" strokeWidth="5" />
+          <line x1={`${5 + (routeProgress * 0.88)}%`} y1="50%" x2="93%" y2="50%" stroke="gray" strokeWidth="5" />
         </svg>
 
         {/* Truck Icon Moving */}
         <img 
           src={truckIcon} 
           className="w-[25px] absolute z-20 transform -translate-y-1/2" 
-          style={{ left: `${truckPositionX}%`, top: "40%" }} 
+          style={{ left: `${5 + (routeProgress * 0.81)}%` , top: "40%" }} 
           alt="Truck"
         />
 
         {/* End Point */}
-        <img src={end} className="w-[15px] relative z-10" alt="End" />
+        <img src={end} className="w-[15px] relative z-10" alt="End" />  
       </div>
 
       {/* Time Labels */}

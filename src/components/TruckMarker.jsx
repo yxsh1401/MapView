@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Marker, OverlayView } from "@react-google-maps/api";
 // import truckIcon from "../assets/images/ttruck.png"; 
 import truckIcon from "../assets/images/car.png"; 
 import TripInfoCard from "./TripInfoCard"; // Import the Trip Info Card
+import { RouteContext } from "../context/RouteContext";
 
 
 const TruckMarker = ({ waypoints, isActive, trip, onEnd }) => {
+  const { routeProgress, setRouteProgress } = useContext(RouteContext);
   const [markerPosition, setMarkerPosition] = useState(null);
   const [currentWaypointIndex, setCurrentWaypointIndex] = useState(0);
   const [showTripInfo, setShowTripInfo] = useState(false);
@@ -13,6 +15,7 @@ const TruckMarker = ({ waypoints, isActive, trip, onEnd }) => {
   useEffect(() => {
     if (!isActive || waypoints.length === 0) {
       setMarkerPosition(null);
+      setRouteProgress(0);
       return;
     }
 
@@ -22,10 +25,12 @@ const TruckMarker = ({ waypoints, isActive, trip, onEnd }) => {
       setCurrentWaypointIndex((prevIndex) => {
         const nextIndex = prevIndex + 1;
         if (nextIndex < waypoints.length) {
-          setMarkerPosition(waypoints[nextIndex]); // Move to next waypoint
+          setMarkerPosition(waypoints[nextIndex]);
+          setRouteProgress(((nextIndex + 1) / waypoints.length) * 100); // Move to next waypoint
           return nextIndex;
         } else {
           clearInterval(interval);
+          setRouteProgress(100);
           if (onEnd) onEnd();
           return prevIndex;
         }
@@ -33,7 +38,7 @@ const TruckMarker = ({ waypoints, isActive, trip, onEnd }) => {
     }, 2000); // Moves every 2 seconds
 
     return () => clearInterval(interval);
-  }, [waypoints, isActive]);
+  }, [waypoints, isActive, setRouteProgress]);
 
   if (!isActive || !markerPosition) return null;
 
