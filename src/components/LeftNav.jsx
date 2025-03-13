@@ -63,7 +63,7 @@ const LeftNavBar = ({ onHoverChange }) => {
         {LeftList.map((item, index) => (
           <a
             key={index}
-            href="#"
+            href={item.text}
             className="flex items-center px-4 py-2 hover:bg-[rgba(40,0,252,0.1)] rounded-lg transition group"
           >
             {/* Image with hover effect */}

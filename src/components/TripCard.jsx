@@ -13,7 +13,7 @@ const TripCard = ({ trip, index, onTripSelect, setSelectedTrip }) => {
 
   return (
     <div
-      className="bg-white rounded-lg p-4 mb-3 w-full hover:bg-gray-200"
+      className="bg-white rounded-lg p-4 mb-3 w-full hover:bg-slate-100"
       // onClick={() => onTripSelect(trip)}
     >
       {/* Header Section */}
@@ -110,7 +110,7 @@ const TripCard = ({ trip, index, onTripSelect, setSelectedTrip }) => {
             )}
 
             {/* Destination */}
-            <div className="flex-col">
+            <div className="flex-col pt-1">
               <div className="flex items-center">
                 <span className="w-2 h-2 bg-green-500 rounded-full relative">
                   <span className="absolute inset-1 m-auto w-1 h-1 bg-green-500 rounded-full"></span>

@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Marker, OverlayView } from "@react-google-maps/api";
-// import truckIcon from "../assets/images/ttruck.png"; 
-import truckIcon from "../assets/images/truck.png"; 
-import TripInfoCard from "./TripInfoCard"; // Import the Trip Info Card
+import truckIcon from "../assets/images/truck.png";
+import TripInfoCard from "./TripInfoCard";
 import { RouteContext } from "../context/RouteContext";
 
-
 const TruckMarker = ({ waypoints, isActive, trip, onEnd }) => {
-  const { routeProgress, setRouteProgress } = useContext(RouteContext);
+  const { setRouteProgress } = useContext(RouteContext);
   const [markerPosition, setMarkerPosition] = useState(null);
   const [currentWaypointIndex, setCurrentWaypointIndex] = useState(0);
   const [showTripInfo, setShowTripInfo] = useState(false);
@@ -19,26 +17,69 @@ const TruckMarker = ({ waypoints, isActive, trip, onEnd }) => {
       return;
     }
 
-    setMarkerPosition(waypoints[0]); // Start at first waypoint
+    setMarkerPosition(waypoints[0]); // Start at the first waypoint
+    console.log("Starting Position:", waypoints[0]);
 
-    const interval = setInterval(() => {
-      setCurrentWaypointIndex((prevIndex) => {
-        const nextIndex = prevIndex + 1;
-        if (nextIndex < waypoints.length) {
-          setMarkerPosition(waypoints[nextIndex]);
-          setRouteProgress(((nextIndex + 1) / waypoints.length) * 100); // Move to next waypoint
-          return nextIndex;
-        } else {
-          clearInterval(interval);
-          setRouteProgress(100);
-          if (onEnd) onEnd();
-          return prevIndex;
-        }
-      });
-    }, 2000); // Moves every 2 seconds
+    let animationFrameId;
 
-    return () => clearInterval(interval);
-  }, [waypoints, isActive, setRouteProgress]);
+    const moveTruck = (start, end, duration) => {
+  let startTime = performance.now();
+
+  const animate = (currentTime) => {
+    let elapsedTime = currentTime - startTime;
+    let progress = elapsedTime / duration;
+
+    if (progress > 1) progress = 1;
+
+    let lat = start.lat() + (end.lat() - start.lat()) * progress;
+    let lng = start.lng() + (end.lng() - start.lng()) * progress;
+
+    let newPosition = { lat, lng };
+    setMarkerPosition(newPosition);
+
+    // Update trip progress
+    let totalWaypoints = waypoints.length;
+    let completedPercentage =
+      ((currentWaypointIndex + progress) / totalWaypoints) * 100;
+    setRouteProgress(completedPercentage);
+
+    if (progress < 1) {
+      animationFrameId = requestAnimationFrame(animate);
+    } else {
+      setCurrentWaypointIndex((prevIndex) => prevIndex + 1);
+    }
+  };
+
+  animationFrameId = requestAnimationFrame(animate);
+};
+
+    const moveToNextWaypoint = () => {
+      console.log("Waypoints:", waypoints); // Log all waypoints
+      console.log("Current index:", currentWaypointIndex);
+      console.log("Current waypoint:", waypoints[currentWaypointIndex]);
+    
+      if (
+        currentWaypointIndex < waypoints.length - 1 &&
+        waypoints[currentWaypointIndex] &&
+        waypoints[currentWaypointIndex + 1]
+      ) {
+        console.log("Next waypoint:", waypoints[currentWaypointIndex + 1]);
+    
+        moveTruck(
+          waypoints[currentWaypointIndex],
+          waypoints[currentWaypointIndex + 1],
+          2000 // Smooth transition over 2 seconds
+        );
+      } else {
+        console.warn("No valid next waypoint. Ending trip.");
+        setRouteProgress(100);
+        if (onEnd) onEnd();
+      }
+    };
+    moveToNextWaypoint();
+
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [waypoints, isActive, setRouteProgress, currentWaypointIndex]);
 
   if (!isActive || !markerPosition) return null;
 
@@ -51,10 +92,9 @@ const TruckMarker = ({ waypoints, isActive, trip, onEnd }) => {
           scaledSize: new window.google.maps.Size(60, 60),
           anchor: new window.google.maps.Point(20, 20),
         }}
-        onClick={() => setShowTripInfo((prev) => !prev)} // Toggle info card
+        onClick={() => setShowTripInfo((prev) => !prev)}
       />
 
-      {/* Trip Info Card appears above truck */}
       {showTripInfo && (
         <OverlayView
           position={markerPosition}

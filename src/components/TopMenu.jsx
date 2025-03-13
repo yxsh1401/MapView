@@ -5,11 +5,11 @@ import profile from "../assets/images/profile_side/images (24) 1.png";
 import refresh from "../assets/images/profile_side/refresh-cw.svg";
 import settings from '../assets/images/settings/sliders.svg'
 
-import cust from '../assets/images/top/cust.svg'
-import fact from '../assets/images/top/fact.svg'
-import war from '../assets/images/top/war.svg'
-import gas from '../assets/images/top/gas.svg'
-import hotel from '../assets/images/top/hotel.svg'
+import cust from '../assets/images/top/cust.png'
+import fact from '../assets/images/top/fact.png'
+import war from '../assets/images/top/war.png'
+import gas from '../assets/images/top/gas.png'
+import hotel from '../assets/images/top/hotel.png'
 
 const TopMenuBar = () => {
   const [isToggled, setIsToggled] = useState(false);

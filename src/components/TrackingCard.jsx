@@ -48,7 +48,7 @@ const TrackingCard = ({ trip }) => {
   const completedLineWidth = `${4 + progress * 90}%`; // Completed path width
 
   return (
-    <div className="absolute bottom-7 left-[960px] transform -translate-x-1/2 bg-white shadow-lg rounded-lg p-[16px] w-[456px] h-[120px] flex-column items-center z-10">
+    <div className="absolute bottom-7 left-[960px] transform -translate-x-1/2 bg-white shadow-lg rounded-lg p-[16px] w-[456px] h-[120px] flex-column items-center z-10 border-1 border-gray-300">
       {/* Header */}
       <div className="flex items-center gap-4 border-b border-gray-300 w-full pb-2">
         <div className="flex justify-between w-full">
@@ -67,10 +67,10 @@ const TrackingCard = ({ trip }) => {
         {/* SVG Route */}
         <svg className="absolute left-0 right-0 w-full h-2" xmlns="http://www.w3.org/2000/svg">
           {/* Completed Path (Green) */}
-          <line x1="5%" y1="50%" x2={`${5 + (routeProgress * 0.88)}%`}  y2="50%" stroke="green" strokeWidth="5" />
+          <line x1="5%" y1="50%" x2={`${5 + (routeProgress * 0.88)}%`}  y2="50%" stroke="rgba(40, 163, 76, 1)" strokeWidth="5" />
           
           {/* Remaining Path (Gray) */}
-          <line x1={`${5 + (routeProgress * 0.88)}%`} y1="50%" x2="93%" y2="50%" stroke="gray" strokeWidth="5" />
+          <line x1={`${5 + (routeProgress * 0.88)}%`} y1="50%" x2="93%" y2="50%" stroke="rgba(241, 245, 247, 1)" strokeWidth="5" />
         </svg>
 
         {/* Truck Icon Moving */}

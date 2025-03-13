@@ -38,7 +38,7 @@
                 <div className="ml-3 w-full">
                     <div className="flex justify-between">
                         <div>
-                            <h2 className="text-[12px] text-blue-700 font-bold">Trip Id: {trip.id}</h2>
+                            <h2 className="text-[12px] text-blue-700 font-bold cursor-pointer" onClick={() => window.history.pushState({}, "", "/Trip")}>Trip Id: {trip.id}</h2>
                         </div>
                         <div className="flex gap-2">
                             <p className="text-gray-900">{trip.dateTime}</p>
